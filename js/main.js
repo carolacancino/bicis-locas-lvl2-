@@ -1,73 +1,122 @@
 function validateForm(){
     
-    var name=document.getElementById('name').value;
-    if(name.length==0){
-        alert("Ingrese su nombre");
-        return false;
+    var letrasnormales = /^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
+
+    function Nombre(){
+
+        var Nombre = document.getElementById("name").value;
+        if(Nombre == null || Nombre.length == 0 || /^\s+$/.test(Nombre)) {
+            var papa = document.getElementsByClassName('input-box')[0];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Ingrese su nombre');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+            return false;
+
+        } else if(!letrasnormales.test(Nombre)){
+            var papa = document.getElementsByClassName('input-box')[0];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Debes ingresar solo letras');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+            return  true;
+
+        } else if (Nombre.charAt(0) != Nombre.charAt(0).toUpperCase()) {
+            var papa = document.getElementsByClassName('input-box')[0];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Debe comenzar con mayusculas');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+        }
     }
-    validarLetras(name);
-    validarMayus(name);
-    
-    function validarLetras(nombre){
-        var filter6=/^[A-Za-z\_\-\.\s\xF1\xD1]+$/;
-        if (filter6.test(nombre)){
+    Nombre();
+
+    function apellido(){
+
+        var apellido = document.getElementById("lastname").value;
+        if(apellido == null || apellido.length == 0 || /^\s+$/.test(apellido)) {
+            var papa = document.getElementsByClassName('input-box')[1];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Ingrese su apellido');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+            return false;
+
+        }else if(!letrasnormales.test(apellido)){
+            var papa = document.getElementsByClassName('input-box')[1];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Ingrese solo letras');
+            hijo.appendChild(texo);
+            papa.appendChild(hijo);
             return true;
-        }else{
-         alert("Debes Ingresar solo letras");
-        } 
+
+        } else if (apellido.charAt(0) != apellido.charAt(0).toUpperCase()) {
+            var papa = document.getElementsByClassName('input-box')[1];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Debe comenzar con mayusculas');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);   
+        }
     }
-   
-    function validarMayus(nombre){
-        if(nombre.substring(0,1)==nombre.substring(0,1).toUpperCase()){
+    apellido();
+
+    function correo(){
+        var caracteres = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/;
+        var correo = document.getElementById('input-email').value;
+        if(correo === null || correo.length === 0){
+            var papa = document.getElementsByClassName('input-box')[2];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Ingrese su correo electronico');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+            return false;
+
+        }else if(caracteres.test(correo)){
+            var papa = document.getElementsByClassName('input-box')[2];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('Verifique su correo electronico');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
             return true;
-        }else{
-            alert("El campo debe comenzar con Mayuscula");
+        }
+    }
+    correo();
+
+    function contras(){
+        var contras = document.getElementById('input-password').value;
+        if(contras == null || contras.length === 0){
+            var papa = document.getElementsByClassName('input-box')[3];
+            var hijo = document.createElement('span');
+            var texto = document.createTextNode('Ingrese una contraseña');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
+            return false;
+
+        }else if (contras.length < 6) {
+            var papa = document.getElementsByClassName('input-box')[3];
+            var hijo = document.createElement('span');           
+            var texto = document.createTextNode('La contraseña debe tener seis caracteres');
+            hijo.appendChild(texto);
+            papa.appendChild(hijo);
             return false;
         }
     }
+    contras();
 
-    var lastName=document.getElementById('lastname').value;
-    if(lastName.length==0){
-        alert("Ingrese su Apellido");
-        return false;
-    }
-    validarLetras(lastName);
-    validarMayus(lastName);
-    
-    var pass=document.getElementById('input-password').value;
-    
-    if(pass.length==0){
-        alert("Falta Ingresar Password");
-    }
-    
-    if(pass!="123456" && pass!="0987654"){
-
-        if(pass.length>=6){
-            return true;
-        }else{
-            alert("La contraseña debe tener al menos 6 caracteres");
-        }
-    }else{
-        alert("La contraseña no puede ser ni 123456 ni 0987654");
-    }
-    
-    var mail = document.getElementById("input-email").value;
-
-    if(mail.length==0){
-        alert("Debe ingresar su mail");
-        return false;
-    }
-
-    if( !(/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)/.test(mail)) ) {
-        return false;
+    function tipoBici(){
+        var select = document.getElementsByTagName('select')[0];
+        var tipo = select.value;
+        var papa = document.getElementsByClassName('input-box')[4];
+        var hijo = document.createElement('span');           
+        var texto = document.createTextNode('Seleccione una opcion');
+        hijo.appendChild(texto);
+        papa.appendChild(hijo);
+            return false;
+        
+        return tipo == 'urbana' || tipo == 'trekking' || tipo == 'electrica' || tipo == 'estatica';
 
     }
+    tipoBici();
 
-    function seleccion(){
-        var valor = document.querySelector('select').value;
-        if( valor == null || valor == '0' ){
-            alert("Debes seleccionar un tipo de bici.");
-        }
-    }
-    seleccion();
 }
+    validateForm();
